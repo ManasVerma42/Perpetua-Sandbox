@@ -1,0 +1,118 @@
+```plaintext
+FILE_PATH: src/components/TodoList.js
+---
+import React, { useState } from 'react';
+
+const TodoList = () => {
+    const [todos, setTodos] = useState([]);
+    const [newTodo, setNewTodo] = useState('');
+
+    const addTodo = () => {
+        if (newTodo.trim()!== '') {
+            setTodos([...todos, newTodo]);
+            setNewTodo('');
+        }
+    };
+
+    const removeTodo = (index) => {
+        setTodos(todos.filter((_, i) => i!== index));
+    };
+
+    return (
+        <div>
+            <input 
+                type="text" 
+                value={newTodo} 
+                onChange={(e) => setNewTodo(e.target.value)} 
+            />
+            <button onClick={addTodo}>Add Todo</button>
+            <ul>
+                {todos.map((todo, index) => (
+                    <li key={index}>
+                        {todo}
+                        <button onClick={() => removeTodo(index)}>Remove</button>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+};
+
+export default TodoList;
+
+FILE_PATH: src/components/App.js
+---
+import React from 'react';
+import TodoList from './TodoList';
+
+const App = () => {
+    return (
+        <div>
+            <TodoList />
+        </div>
+    );
+};
+
+export default App;
+
+FILE_PATH: src/index.js
+---
+import React from'react';
+import ReactDOM from 'react-dom';
+import App from './components/App';
+import './index.css';
+
+ReactDOM.render(<App />, document.getElementById('root'));
+
+FILE_PATH: src/index.css
+---
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+.App {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input, button {
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    cursor: pointer;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+li button {
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+}
+
+li button:hover {
+    color: darkred;
+}
+```
